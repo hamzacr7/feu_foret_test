@@ -1,0 +1,6 @@
+{
+  "hauteur": 10,
+  "largeur": 10,
+  "positions_feu": [[2,2], [6, 6]],
+  "probabilite": 0.5
+}
