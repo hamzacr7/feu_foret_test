@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+	<!-- Add bootstrap and custom styles -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+	<title>Simulation de Feu de Foret</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			text-align: center;
+		}
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(10, 30px);
+			max-width: fit-content;
+			margin-top: 20px;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		button {
+			margin: 10px 10px 10px !important;
+		}
+
+		.start-btn {
+			background-color: chartreuse;
+		}
+
+		.reset-btn {
+			background-color: darkturquoise;
+		}
+		.cell {
+			width: 30px;
+			height: 30px;
+			border: 1px solid #ccc;
+		}
+		.en-feu {
+			background-color: red;
+		}
+		.cendre {
+			background-color: gray;
+		}
+		.vert {
+			background-color: green;
+		}
+	</style>
+</head>
+
+<body>
+<h1>Simulation de la Propagation du Feu de Foret</h1>
+<div class="grid" id="grid"></div>
+
+<div class="btn-group" role="group"
+	 aria-label="Basic outlined example">
+	<button type="button"
+			id="start-btn"
+			class="btn btn-lg btn-outline-primary start-btn"
+			onclick="updateGrid()">
+		Commencer
+	</button>
+	<button type="button"
+			id="reset-btn"
+			class="btn btn-lg btn-outline-primary reset-btn"
+			onclick="resetGrid()">
+		Reinitialiser
+	</button>
+</div>
+
+<!-- Scripts javascripts to call php api to To simulate  -->
+<script>
+	const gridElement = document.getElementById('grid');
+	var newForet = null;
+
+	function drawGrid(foret) {
+		gridElement.innerHTML = '';
+		foret.forEach(row => {
+			row.forEach(cell => {
+				const div = document.createElement('div');
+				div.className = 'cell ' + (cell === 1 ? 'en-feu' : (cell === 2 ? 'cendre' : 'vert'));
+				gridElement.appendChild(div);
+			});
+		});
+	}
+
+	async function updateGrid() {
+
+		const grid = document.getElementById("grid");
+		grid.style.display = "grid";
+		const response = await fetch('api.php');
+		this.newForet = await response.json();
+		drawGrid(this.newForet);
+		if (this.newForet.some(row => row.includes(1))) {
+			setTimeout(updateGrid, 1000);
+		}
+		document.getElementById("reset-btn").disabled = false;
+	}
+
+	async function resetGrid() {
+		const response = await fetch('api.php');
+		const grid = document.getElementById("grid");
+		grid.style.display = "none";
+		document.getElementById("reset-btn").disabled = true;
+	}
+
+
+</script>
+</body>
+</html>
