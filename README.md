@@ -1,10 +1,11 @@
 # Installation
 
 Etape 1 :
-git clone git clone https://github.com/hamzacr7/feu_foret_test.git
+Lancer la commande ci-dessous pour telecharger le projet
+  - git clone https://github.com/hamzacr7/feu_foret_test.git
 
 Etape 2 : 
-Mettre le projet sous un serveur PHP (WAMP, XAMP) sous windows
+Mettre le projet sous un serveur PHP
 
 Etape 3 : 
 Lancer le fichier index.html.
